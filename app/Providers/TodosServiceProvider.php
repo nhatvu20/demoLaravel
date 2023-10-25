@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use App\Interfaces\CarsRepositoryInterface;
+use App\Interfaces\TodosRepositoryInterface;
 use App\Repositories\CarRespository;
-use App\Services\CarService;
+use App\Repositories\TodosRespository;
+use App\Services\Todoservice;
 use Illuminate\Support\ServiceProvider;
 
-class CarsServiceProvider extends ServiceProvider
+class TodosServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -16,8 +17,8 @@ class CarsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(CarsRepositoryInterface::class, CarRespository::class);
-        $this->app->bind(CarsServiceProviderInterface::class, CarService::class);
+        $this->app->bind(TodosRepositoryInterface::class, TodosRespository::class);
+        $this->app->bind(TodosServiceProviderInterface::class, Todoservice::class);
     }
 
     /**

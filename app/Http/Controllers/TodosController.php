@@ -2,42 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cars;
+use App\Http\Requests\Todos\StoreTodosRequest;
+use App\Models\Todos;
+use App\Services\TodoService;
 use Illuminate\Http\Request;
-use App\Services\CarService;
-use Illuminate\Contracts\Validation\Validator;
-use App\Http\Requests\Cars\StoreRequest;
 
-class CarsController extends Controller
+class TodosController extends Controller
 {
-    //
-    protected $carService;
+    protected $todoService;
 
-    public function __construct(CarService $carService)
+    public function __construct(TodoService $todoService)
     {
-        $this->carService = $carService;
+        $this->todoService = $todoService;
     }
 
-    public function create(StoreRequest $request)
+    public function create(StoreTodosRequest $request)
     {
-        // $car = Cars::create($request->all());
-        // return
-        $carData = $request->only(['name', 'brand']);
-        $car = $this->carService->create($carData);
-        return response()->json($car, 201);
+        // $todoData = $request->only(['task']);
+        $todo = $this->todoService->create($request->all());
+        return response()->json($todo, 201);
     }
     public function getAll(Request $request)
     {
-        $carData = $request->only(['name', 'brand']);
-        $car = $this->carService->getAll($carData);
-        return response()->json($car, 201);
+        // $todoData = $request->only(['task']);
+        $todo = $this->todoService->getAll();
+        return response()->json($todo, 201);
+        // return "aa";
     }
     public function getOne(Request $request, String $id)
     {
         // $id = $request->route('id');
-        $car = $this->carService->getOne($id);
+        $todo = $this->todoService->getOne($id);
         return response()->json([
-            'data' => $car,
+            'data' => $todo,
             'status' => true
         ], 201);
     }
@@ -49,17 +46,17 @@ class CarsController extends Controller
     //         'brand' => 'required|alpha|min:6|max:10',
     //     ]);
     // }
-    public function deleteCar(Request $request)
+    public function delete(Request $request)
     {
         $id = $request->route('id');
-        $car = $this->carService->delete($id);
-        return response()->json($car, 201);
+        $todo = $this->todoService->delete($id);
+        return response()->json($todo, 201);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $car = Cars::all();
-        return $car;
+        $todo = $this->todoService->getAll($request->all());
+        return response()->json($todo, 201);
     }
 
     /**
@@ -79,10 +76,10 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Cars $car)
+    public function show(Todos $todo)
     {
         //
-        return $car;
+        return $todo;
     }
 
     /**
@@ -92,11 +89,11 @@ class CarsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(StoreTodosRequest $request)
     {
-        // $cardata = $request->all();
+        // $tododata = $request->all();
         $id = $request->route('id');
-        $res = $this->carService->update($request->all(), $id);
+        $res = $this->todoService->update($request->all(), $id);
         return $res;
     }
 
@@ -108,7 +105,7 @@ class CarsController extends Controller
      */
     public function destroy(String $id)
     {
-        $res = $this->carService->delete($id);
+        $res = $this->todoService->delete($id);
         return $res;
     }
 }

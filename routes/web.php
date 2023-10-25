@@ -61,5 +61,5 @@ Route::get('/', function () {
 //     return view('form');
 // });
 
-Route::get('/products', [ProductsController::class, 'index']);
-Route::get('/products/{id}', [ProductsController::class, 'detail'])->where('id', '[a-zA-Z0-9]');
+// Route::get('/products', [ProductsController::class, 'index']);
+// Route::get('/products/{id}', [ProductsController::class, 'detail'])->where('id', '[a-zA-Z0-9]');

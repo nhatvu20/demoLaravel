@@ -5,8 +5,9 @@ namespace App\Services;
 use App\Models\Cars;
 use App\Repositories\CarRespository;
 use Illuminate\Http\Client\Request;
+use App\Interfaces\CarsServiceInterface;
 
-class CarService
+class CarService implements CarsServiceInterface
 {
     protected $carRespository;
 
@@ -14,18 +15,18 @@ class CarService
     {
         $this->carRespository = $carRespository;
     }
-    public function createCar(array $carData)
+    public function create(array $carData)
     {
         // Gọi phương thức createUser của repository để tạo người dùng mới
         $this->carRespository->create($carData);
     }
 
     // Các phương thức khác trong service...
-    public function getAllCar()
+    public function getAll()
     {
         return $this->carRespository->getAll();
     }
-    public function getOneCar(String $id)
+    public function getOne(String $id)
     {
         return $this->carRespository->getOne($id);
     }
